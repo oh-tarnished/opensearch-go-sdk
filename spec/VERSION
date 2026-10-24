@@ -1,0 +1,6 @@
+# The pinned OpenSearch API Specification release. `make check-spec` verifies
+# spec/opensearch-openapi.yaml against SHA256; `make update-spec VERSION=vX.Y.Z`
+# downloads another release and rewrites this file.
+VERSION=v0.2.0
+URL=https://github.com/opensearch-project/opensearch-api-specification/releases/download/v0.2.0/opensearch-openapi.yaml
+SHA256=22c5eb078b7ad796930f0a05e178b681dad5cd10a5610e5287d7aa9f8e7a374c

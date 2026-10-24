@@ -1,0 +1,17 @@
+opensearch-go-client
+Copyright 2026 oh-tarnished
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It includes, in spec/opensearch-openapi.yaml, the OpenSearch API
+Specification, and the code in opensearchapi/ is generated from it:
+
+  OpenSearch API Specification
+  https://github.com/opensearch-project/opensearch-api-specification
+  OpenSearch (https://opensearch.org/)
+  Copyright OpenSearch Contributors
+  Licensed under the Apache License, Version 2.0 (spec/LICENSE.txt).
+
+The generated code is produced by oapi-codegen
+(https://github.com/oapi-codegen/oapi-codegen, Apache-2.0) and uses its
+runtime library (https://github.com/oapi-codegen/runtime, Apache-2.0).

@@ -1,0 +1,62 @@
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: opensearch-go-client fixes to the OpenSearch OpenAPI specification
+  version: 1.0.0
+# x-go-type names json.RawMessage without an x-go-type-import: every
+# generated file already imports encoding/json, and naming it again makes
+# oapi-codegen import it twice.
+actions:
+  # Documents are arbitrary JSON: the spec's generic type parameters
+  # (TDocument, T, TBucket) become json.RawMessage.
+  - target: $.components.schemas[?(@['x-is-generic-type-parameter'] == true)]
+    description: Generic type parameters are raw JSON.
+    update:
+      x-go-type: json.RawMessage
+  # The query DSL and aggregations pass through untouched.
+  - target: $.components.schemas['common.query_dsl___QueryContainer']
+    description: Query DSL is raw JSON.
+    update:
+      x-go-type: json.RawMessage
+  - target: $.components.schemas['common.aggregations___AggregationContainer']
+    description: Aggregation requests are raw JSON.
+    update:
+      x-go-type: json.RawMessage
+  - target: $.components.schemas['common.aggregations___Aggregate']
+    description: Aggregation results are raw JSON.
+    update:
+      x-go-type: json.RawMessage
+  # nodes.info's {node_id_or_metric} is anyOf [NodeIds, array of Metric];
+  # oapi-codegen turns the inline array into an undefined type. Either
+  # alternative is a comma-separated string in the path, so it is one.
+  - target: $.components.parameters['nodes.info___path.node_id_or_metric'].schema.anyOf
+    description: Drop the union that does not compile.
+    remove: true
+  - target: $.components.parameters['nodes.info___path.node_id_or_metric'].schema
+    description: Node ids or metrics, comma-separated.
+    update:
+      type: string
+  # A search hit is declared as allOf [Hit, {_source: T}], which generates
+  # an anonymous struct per hits array. Hit already carries _source as the
+  # document type, so the items are plain Hits.
+  - target: $.components.schemas['core.search___HitsMetadata'].properties.hits.items.allOf
+    description: Drop the redundant allOf.
+    remove: true
+  - target: $.components.schemas['core.search___HitsMetadata'].properties.hits.items
+    description: Hits are core.search___Hit.
+    update:
+      $ref: '#/components/schemas/core.search___Hit'
+  # Stored documents are arbitrary JSON wherever the spec returns them as
+  # a free-form object.
+  - target: $.components.schemas['core.get___GetResult'].properties._source
+    description: Document source is raw JSON.
+    update:
+      x-go-type: json.RawMessage
+  - target: $.components.schemas['common___InlineGet'].properties._source
+    description: Document source is raw JSON.
+    update:
+      x-go-type: json.RawMessage
+  - target: $.components.schemas['common___InlineGetDictUserDefined'].properties._source
+    description: Document source is raw JSON.
+    update:
+      x-go-type: json.RawMessage

@@ -1,0 +1,13 @@
+package: opensearchapi
+output: types.gen.go
+generate:
+  models: true
+output-options:
+  # Go initialisms: IndexPathID, not IndexPathId.
+  name-normalizer: ToCamelCaseWithInitialisms
+  overlay:
+    path: ../spec/overlay.yaml
+compatibility:
+  # Enum values such as CommonNodeRole "client" would otherwise collide with
+  # the generated Client type.
+  always-prefix-enum-values: true

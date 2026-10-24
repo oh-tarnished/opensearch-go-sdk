@@ -1,0 +1,35 @@
+# specprep selects and names the operations oapi-codegen generates.
+# Paths are relative to this file. See tools/specprep for what it does.
+spec: opensearch-openapi.yaml
+output: build/opensearch-openapi.prepared.yaml
+
+# x-operation-group globs (path.Match syntax). "*" keeps every namespace;
+# narrow it (e.g. ["search", "indices.*"]) to generate less.
+include:
+  - "*"
+
+# Groups left out, each with the reason. Adding one back is deleting its line.
+exclude: []
+
+# Original operation ids (search.0, ...) left out, each with the reason.
+exclude-operations:
+  # /_aliases/... are synonyms of /_alias/... for put_alias and delete_alias;
+  # the /_alias/ forms are generated.
+  - indices.put_alias.3
+  - indices.put_alias.4
+  - indices.put_alias.8
+  - indices.put_alias.9
+  - indices.put_alias.10
+  - indices.delete_alias.1
+
+# Deprecated operations are the old `{type}` variants and plugin endpoints
+# that newer releases replaced; the replacements are generated.
+skip-deprecated: true
+
+# One method per (group, path) when the spec lists equivalent methods.
+method-priority: [PUT, POST, GET, DELETE, HEAD, PATCH]
+
+# Go name overrides, keyed by original operation id.
+names: {}
+
+initialisms: [id, ids, ml, knn, sql, ppl, ism, wlm, ltr, uuid, pit, sm, api, url, http, ssl, tls, dn, ip, cpu, json, ttl]

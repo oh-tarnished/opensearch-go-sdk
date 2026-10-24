@@ -1,0 +1,9 @@
+package: opensearchapi
+output: client.gen.go
+generate:
+  client: true
+output-options:
+  # Go initialisms: IndexPathID, not IndexPathId.
+  name-normalizer: ToCamelCaseWithInitialisms
+  overlay:
+    path: ../spec/overlay.yaml
