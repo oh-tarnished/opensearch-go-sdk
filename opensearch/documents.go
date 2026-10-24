@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearchapi"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearchapi"
 )
 
 // WriteResult is the response to a single-document write.

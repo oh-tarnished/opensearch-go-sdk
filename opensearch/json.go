@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearchapi"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearchapi"
 )
 
 // Documents, queries and aggregations are any JSON. A body argument typed

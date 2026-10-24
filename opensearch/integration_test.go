@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearch"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearch"
 )
 
 // Integration tests run against the cluster at OPENSEARCH_URL (security

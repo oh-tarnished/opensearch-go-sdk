@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearchapi"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearchapi"
 )
 
 // Names names one or more aliases or templates for a path parameter.

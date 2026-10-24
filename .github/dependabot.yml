@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # Go modules: the oapi-codegen runtime, yaml, and the oapi-codegen tool.
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      go:
+        patterns: ['*']
+    commit-message:
+      prefix: deps
+  # The actions the workflows use.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+    commit-message:
+      prefix: ci

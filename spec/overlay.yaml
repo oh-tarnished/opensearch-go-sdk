@@ -1,7 +1,7 @@
 overlay: 1.0.0
 x-speakeasy-jsonpath: rfc9535
 info:
-  title: opensearch-go-client fixes to the OpenSearch OpenAPI specification
+  title: opensearch-go-sdk fixes to the OpenSearch OpenAPI specification
   version: 1.0.0
 # x-go-type names json.RawMessage without an x-go-type-import: every
 # generated file already imports encoding/json, and naming it again makes

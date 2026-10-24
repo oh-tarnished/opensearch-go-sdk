@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearchapi"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearchapi"
 )
 
 const contentTypeNDJSON = "application/x-ndjson"

@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearchapi"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearchapi"
 )
 
 // ByQueryOptions are the optional parameters of the by-query operations and

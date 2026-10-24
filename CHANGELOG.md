@@ -6,6 +6,27 @@ uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-24
+
+### Fixed
+
+- The module path is `github.com/oh-tarnished/opensearch-go-sdk`, matching
+  the repository; v0.1.0 declared `opensearch-go-client` and cannot be
+  fetched.
+
+### Added
+
+- Releases: pushing a tag `vX.Y.Z` runs the generated-code check and the
+  tests, then publishes a GitHub release whose notes are this file's section
+  for the version plus the merged pull requests.
+- Spec updates: a weekly workflow re-pins a newer OpenSearch API
+  Specification, regenerates, tests, records the operations added and removed
+  here, and opens a pull request.
+- Dependabot: weekly updates for Go modules and GitHub Actions; security
+  alerts and fixes are on.
+
+## [0.1.0] - 2026-10-24
+
 ### Added
 
 - `opensearchapi`: client and models generated with oapi-codegen v2.8.0 from

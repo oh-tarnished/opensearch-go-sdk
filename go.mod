@@ -1,4 +1,4 @@
-module github.com/oh-tarnished/opensearch-go-client
+module github.com/oh-tarnished/opensearch-go-sdk
 
 go 1.25.0
 

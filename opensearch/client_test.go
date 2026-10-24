@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearch"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearch"
 )
 
 func newTestClient(t *testing.T, h http.HandlerFunc, cfg opensearch.Config) *opensearch.Client {

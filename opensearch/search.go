@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearchapi"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearchapi"
 )
 
 // SearchResponse is a search response. Hits carry their _source as raw

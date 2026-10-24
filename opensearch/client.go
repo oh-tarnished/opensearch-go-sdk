@@ -22,7 +22,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/oh-tarnished/opensearch-go-client/opensearchapi"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearchapi"
 )
 
 // Config configures a Client. Only URL is required.

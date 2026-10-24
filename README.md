@@ -1,4 +1,4 @@
-# opensearch-go-client
+# opensearch-go-sdk
 
 A Go client for [OpenSearch](https://opensearch.org/), generated from the
 official [OpenSearch API Specification](https://github.com/opensearch-project/opensearch-api-specification)
@@ -35,7 +35,7 @@ Makefile                    generate, check-generated, update-spec, vet, test
 
 ```go
 import (
-	"github.com/oh-tarnished/opensearch-go-client/opensearch"
+	"github.com/oh-tarnished/opensearch-go-sdk/opensearch"
 )
 
 c, err := opensearch.New(opensearch.Config{
@@ -219,6 +219,23 @@ point-in-time iteration of all of them, scroll, aggregations, msearch, async
 search, a sliced delete_by_query task, an alias-swap reindex, index
 templates and ISM policies. `OPENSEARCH_USERNAME`/`OPENSEARCH_PASSWORD` are
 used when set.
+
+## Releasing
+
+1. Move the "Unreleased" entries in `CHANGELOG.md` under `## [X.Y.Z] - date`.
+2. Commit, then push a tag `vX.Y.Z`.
+
+The `release` workflow checks the generated code, runs the unit and
+integration tests, and publishes a GitHub release: the pinned specification
+version, this version's `CHANGELOG.md` section, then the merged pull
+requests.
+
+Every Monday the `spec update` workflow (also runnable by hand, optionally
+with a version) looks for a newer specification release. When there is one
+it re-pins it, regenerates, runs the unit tests, adds the versions and the
+operations added and removed under "Unreleased", and opens a pull request.
+Merge it and tag to release. Dependabot opens weekly pull requests for Go
+modules and GitHub Actions; security alerts and fixes are on.
 
 ## Licence
 

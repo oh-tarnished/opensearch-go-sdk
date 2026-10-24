@@ -1,0 +1,80 @@
+name: spec update
+
+# Weekly (and on demand): if the OpenSearch API Specification has a newer
+# release than spec/VERSION pins, re-pin it, regenerate, run the unit tests,
+# record the change under "Unreleased" in CHANGELOG.md (versions plus the
+# operations added and removed), and open a pull request. Merge it, then tag
+# to release.
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Specification release to pin (default the latest)
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  GOWORK: "off"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Compare with the latest release
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WANT: ${{ inputs.version }}
+        run: |
+          current="$(sed -n 's/^VERSION=//p' spec/VERSION)"
+          latest="${WANT:-$(gh api repos/opensearch-project/opensearch-api-specification/releases/latest --jq .tag_name)}"
+          echo "current=${current}" >> "$GITHUB_OUTPUT"
+          echo "latest=${latest}" >> "$GITHUB_OUTPUT"
+          if [[ "${current}" == "${latest}" ]]; then
+            echo "Pinned ${current} is the latest."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Re-pin, regenerate and test
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          .github/scripts/operations.sh > "${RUNNER_TEMP}/before.txt"
+          make update-spec VERSION="${{ steps.check.outputs.latest }}"
+          .github/scripts/operations.sh > "${RUNNER_TEMP}/after.txt"
+          make vet
+          go test -race -count=1 ./...
+
+      - name: Record the change in CHANGELOG.md
+        if: steps.check.outputs.changed == 'true'
+        run: >-
+          .github/scripts/spec-changelog.sh
+          "${{ steps.check.outputs.current }}" "${{ steps.check.outputs.latest }}"
+          "${RUNNER_TEMP}/before.txt" "${RUNNER_TEMP}/after.txt"
+
+      - name: Open the pull request
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: spec-update/${{ steps.check.outputs.latest }}
+          commit-message: "feat: OpenSearch API Specification ${{ steps.check.outputs.latest }}"
+          title: "OpenSearch API Specification ${{ steps.check.outputs.latest }}"
+          body: |
+            Re-pins the specification from ${{ steps.check.outputs.current }} to ${{ steps.check.outputs.latest }} and regenerates `opensearchapi/`.
+            Unit tests pass; CI runs the integration tests on this pull request.
+            The operations added and removed are listed under "Unreleased" in CHANGELOG.md.
+            If an overlay target no longer matches, regeneration fails above and names it.
+          labels: spec-update
+          delete-branch: true
