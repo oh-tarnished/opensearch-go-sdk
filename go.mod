@@ -1,12 +1,12 @@
 module github.com/oh-tarnished/opensearch-go-sdk
 
-go 1.25.0
+go 1.26.0
 
 tool github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen
 
 require (
-	github.com/oapi-codegen/runtime v1.8.0
-	go.yaml.in/yaml/v3 v3.0.4
+	github.com/oapi-codegen/runtime v1.9.0
+	go.yaml.in/yaml/v3 v3.0.5
 	gopkg.in/yaml.v3 v3.0.1
 )
 
